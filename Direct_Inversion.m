@@ -2,149 +2,94 @@ clc
 clear all
 close all
 
-%% phantom image
+load('modifiedshep.mat');
 FOV=256;
 ph=phantom('modified shepp-logan',FOV);
- 
-Ny=FOV;
-Nx=FOV;
-Nc=8;
-M=1; 
-mask=zeros(Ny,Nx);
-mask(1:M:Ny, :)= 1;
+Nc = 8;
+Nx =  FOV;
+Ny =  FOV;
+rate = 8;
+figure(1) ;
+imshow(ph,[])
 
-%% coil's senstivity (y-direction)
-c_sens=zeros(Ny,Nx,Nc);
+%% Images of each coils
+
 for n=1:Nc
-    for i=1:Ny
-        for j=1:Nx
- 
-            mean=(FOV/(Nc+1)).*n;
-            var=30;
- 
-            a = 1/(var*(2*pi)^(0.5));
-            b = (i-mean)^2;
-            d = 2*((var)^2);
-            k = (-1)*(b/d);
- 
-            c_sens(i,j,n)=a*exp(k);
- 
-        end
+    c_img1(:,:,n) = ph.*c_sens(:,:,n); 
+end
+
+c_raw=fftshift(fft2(fftshift(c_img1)));
+
+mask = sort([Ny/2+rate:rate:Ny, Ny/2:-rate:1 ]);
+for n=1:Nc
+k_space_undersampling(:,:,n) = c_raw(mask,:,n); 
+end
+figure(5);
+for n=1:Nc
+    subplot(2,ceil(Nc/2),n);
+    imshow(abs(k_space_undersampling(:,:,n)),[]);
+    title('Under-Sampled kspace');
+end
+
+
+%% 2D inverse Discrete Fourier Transform in Seperated directions
+k_space = fftshift(k_space_undersampling);
+inner = zeros(Ny/rate,Nx,Nc);
+inner_sum = 0;
+% Inverse Discrete Fourier Transform along the x-direction
+for n=1:Nc
+    for ky=0:Ny/rate-1
+        for x=0:Nx-1 % index in spatial domain
+            for kx=-Nx/2:Nx/2-1 % index in K space
+                 inner_sum = inner_sum + k_space(ky+1,kx+Nx/2+1,n)*exp(1i*2*pi*(kx/Nx)*x); 
+            end 
+            inner(ky+1,x+1,n) = inner_sum;
+            inner_sum = 0;
+        end  
     end
 end
+S_iDFT_x_direction = ifftshift(inner/Nx);
 
-% figure1 - c_sens
-figure(1),
-for n=1:Nc
-    subplot(2,ceil(Nc/2),n)
-    imshow(c_sens(:,:,n),[])
-end
+permuted_S = permute(S_iDFT_x_direction, [1,3,2]);
+S_iDFT_x_direction_group = reshape(permuted_S, [], Nx);
 
-
-%% coil's image
-c_img=zeros(Ny,Nx,Nc);
-for n=1:Nc
-    c_img(:,:,n)=c_sens(:,:,n) .* ph;
-end
- 
-% figure2 - c_img
- 
-figure(2),
-for n=1:Nc
-    subplot(2,ceil(Nc/2),n)
-    imshow(c_img(:,:,n),[])
-end
-
-
-%% k-space data
-for n=1:Nc
-  raw(:,:,n)=fftshift(fft2(fftshift(c_img(:,:,n))));
-end 
-% figrue3 - raw(k-space)
-figure(4),
-for n=1:Nc
-    subplot(2,ceil(Nc/2),n)
-    imshow(abs(raw(:,:,n)),[])
-end
-
-
-%% Zero filling in k space
-
-for n=1:Nc
-    reduced_k(:,:,n) = mask.*raw(:,:,n);
-end
-
-figure,
-for n=1:Nc
-    subplot(2,ceil(Nc/2),n)
-    imshow(abs(reduced_k(:,:,n)),[])
-end
-
-
-%% Undersample coil images
-
-for n=1:Nc
-  c_undersample(:,:,n)=ifftshift(ifft2(ifftshift(reduced_k(:,:,n))));
-end
-
-figure,
-for n=1:Nc
-    subplot(2,ceil(Nc/2),n)
-    imshow(abs(c_undersample(:,:,n)),[])
-end
-
-%% IDFT along X
-
-s_hat = ifftshift(ifft(ifftshift(reduced_k(:,:,:)), [], 2));
-permuted_S = permute(s_hat, [1,3,2]);
-reshaped_S = reshape(permuted_S, [], Nx);
-
-figure,
-for n=1:Nc
-    subplot(2,ceil(Nc/2),n)
-    imshow(abs(s_hat(:,:,n)),[])
-end
-
-figure,
-imshow(abs(reshaped_S),[])
-
-
-%% Final image
-   
-final_img=zeros(Nx,Ny);
-
-y= -Ny/2:(Ny/2-1);
-B=zeros(Ny,Nx,Nc);
-
+%%  Reconstructing image
+BB_hat = zeros(Ny,Ny,Nc);
+ReImage = zeros(Nx,Ny); 
 for x=1:Nx
-     for n = 1:Nc
-        for ky=0:Ny-1      
-            B(ky+1,:,n)= c_sens(:,x,n)'.* exp(2*pi*-1i*ky*y/Ny);
-        end 
-        B(:,:,n) = mask.*B(:,:,n);
-     end
-     
-     permuted_B = permute(B, [1,3,2]);
-     reshaped_B = reshape(permuted_B, [], Nx);
-     
-     final_img(:,x) = pinv(reshaped_B) * reshaped_S(:,x);
+    B_hat_undersampling = [];
+    for n=1:Nc
+        for  ky=-Ny/2:Ny/2-1
+            for  y=-Ny/2:Ny/2-1
+                BB_hat(ky+1+Ny/2,y+1+Ny/2,n) = c_sens(y+1+Ny/2,x,n).*exp(-1i*2*pi*ky*y/Ny);
+                
+            end  
+        end
+    end
+    for n=1:Nc
+    temp = BB_hat(1+(rate-1):rate:end,:,n);
+    B_hat_undersampling = [B_hat_undersampling;temp];
+    end 
+     total_B(:,:,x)=B_hat_undersampling;
 end
-
-figure, 
-imshow(abs(final_img),[])
-
-
+for x=1:256
+ReImage(:,x) = pinv(total_B(:,:,x))*S_iDFT_x_direction_group(:,x); 
+end
 figure,
-imshow(abs(reshaped_B),[])
+imshow(abs(ReImage),[])
+
 
 %% SOS of images
-squared_img = power(abs(c_img), 2);
+squared_img = power(abs(c_img1), 2);
 sum_img = sum(squared_img, 3);
 rsos = sqrt(sum_img);
 
 
 %% Error 
 
-error = (abs(rsos)-abs(final_img)).^2;
+error = (abs(ph)-abs(sqrt(ReImage)).^2);
 RMSE = sqrt(sum(error(:))/(Nx * Ny));
 NRMSE = RMSE/(Nx*Ny)
+
+
+
