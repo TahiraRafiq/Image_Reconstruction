@@ -1,6 +1,6 @@
 # Tahira_Rafiq
 
-**`Electronic Engineer (Researcher)`**
+**`Researcher`**
 
 I am an Electronic Engineer,graduated from Iqra University, Karachi, Pakistan in 2019. Since then I am working as a Gradute Research Assistant in Biomedical Engineering department in a South Korean University. I work on the compartment modeling of neurofluids especially Cerebrospinal fluid in Glymphatic System. 
 
@@ -16,3 +16,4 @@ I am an Electronic Engineer,graduated from Iqra University, Karachi, Pakistan in
 <img align="left" alt="GitHub" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
 <img align="left" alt="docker" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" />
 <img align="left" alt="arduino" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" />
+<img align="left" alt="vhdl" width="30px" style="padding-right:10px;" src="C:\Users\Tahira\Desktop\vhdl.jpeg" />
