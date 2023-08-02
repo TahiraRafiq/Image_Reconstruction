@@ -16,4 +16,4 @@ I am an Electronic Engineer,graduated from Iqra University, Karachi, Pakistan in
 <img align="left" alt="GitHub" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
 <img align="left" alt="docker" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" />
 <img align="left" alt="arduino" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" />
-![autocad-logo-C9817CB828-seeklogo com](https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/3196985a-ad5b-4568-8174-993ebb7e88ed)
+<img align="left" alt="3196985a-ad5b-4568-8174-993ebb7e88ed" width="30px" style="padding-right:10px;" src="https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/3196985a-ad5b-4568-8174-993ebb7e88ed" />
