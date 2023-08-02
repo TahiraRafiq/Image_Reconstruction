@@ -18,7 +18,7 @@ I am an Electronic Engineer,graduated from Iqra University, Karachi, Pakistan in
 <img align="left" alt="3196985a-ad5b-4568-8174-993ebb7e88ed" width="30px" style="padding-right:10px;" src="https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/3196985a-ad5b-4568-8174-993ebb7e88ed" />
 <img align="left" alt="3394e97e-cb67-4773-b46e-848888c456a2" width="40px" style="padding-right:10px;" src="https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/3394e97e-cb67-4773-b46e-848888c456a2" />
 <img align="left" alt="a1ea08ab-8712-4965-8c27-a867d9cda6bb" width="30px" style="padding-right:10px;" src="https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/a1ea08ab-8712-4965-8c27-a867d9cda6bb" />
-<img align="left" alt="141120649/30f93b75-55fb-4c46-a9a9-3e8c99351043" width="40px" style="padding-right:10px;" src="https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/30f93b75-55fb-4c46-a9a9-3e8c99351043" />
+<img align="left" alt="141120649/30f93b75-55fb-4c46-a9a9-3e8c99351043" width="30px" style="padding-right:10px;" src="https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/30f93b75-55fb-4c46-a9a9-3e8c99351043" />
 <img align="left" alt="86436d71-f18b-4e79-bbce-e8a27eb092e6" width="40px" style="padding-right:10px;" src="https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/86436d71-f18b-4e79-bbce-e8a27eb092e6" />
 <img align="left" alt="d54dda43-626d-4e66-921c-c3a7811e6778" width="30px" style="padding-right:10px;" src="https://github.com/TahiraRafiq/Tahira_Rafiq/assets/141120649/d54dda43-626d-4e66-921c-c3a7811e6778" />
 <img align="left" alt="GitHub" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
